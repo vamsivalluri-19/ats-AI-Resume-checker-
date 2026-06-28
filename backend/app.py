@@ -24,7 +24,7 @@ FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
 SKILLS_FILE = os.path.join(BASE_DIR, 'data', 'skills.json')
 
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 
