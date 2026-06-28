@@ -1,9 +1,7 @@
 flask
 flask-cors
 PyPDF2
-sentence-transformers
 scikit-learn
 numpy
 pandas
-spacy
 gunicorn
