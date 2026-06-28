@@ -1,3 +1,7 @@
+// Resolve the API base URL. Replace this with your own Render URL (e.g. https://your-app.onrender.com) after deploying.
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+const API_BASE = isLocal ? "http://127.0.0.1:5000" : "https://ats-ai-resume-checker-backend.onrender.com";
+
 let liveAnalyzeTimer = null;
 let chatHistory = []; // Stores conversation context: { role: 'user'|'model', text: '...' }
 
@@ -96,9 +100,7 @@ async function analyzeResume() {
     }
 
     try {
-        // Use relative URL if served from Flask, otherwise fallback to localhost:5000
-        const isLocalFile = window.location.protocol === 'file:';
-        const apiUrl = isLocalFile ? "http://127.0.0.1:5000/analyze" : "/analyze";
+        const apiUrl = `${API_BASE}/analyze`;
 
         const response = await fetch(apiUrl, {
             method: "POST",
@@ -294,8 +296,7 @@ async function sendChatMessage(customMessage = null) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-        const isLocalFile = window.location.protocol === 'file:';
-        const chatUrl = isLocalFile ? "http://127.0.0.1:5000/chat" : "/chat";
+        const chatUrl = `${API_BASE}/chat`;
 
         const response = await fetch(chatUrl, {
             method: "POST",
