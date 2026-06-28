@@ -1,0 +1,90 @@
+/* Background */
+.stApp {
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: white;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    color: #00ffd5;
+    font-size: 3rem !important;
+    font-weight: bold;
+}
+
+/* Subheaders */
+h2, h3 {
+    color: #00ffd5;
+}
+
+/* File uploader */
+section[data-testid="stFileUploader"] {
+    background-color: #1f2937;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px dashed #00ffd5;
+}
+
+/* Text area */
+textarea {
+    background-color: #111827 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+/* Buttons */
+.stButton>button {
+    background: linear-gradient(90deg, #00ffd5, #00b4d8);
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.stButton>button:hover {
+    transform: scale(1.03);
+    background: linear-gradient(90deg, #00b4d8, #00ffd5);
+}
+
+/* Cards */
+.css-1r6slb0,
+.css-12oz5g7 {
+    background-color: #1e293b !important;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* Success Box */
+.stSuccess {
+    background-color: #064e3b !important;
+    color: white !important;
+    border-radius: 10px;
+}
+
+/* Warning Box */
+.stWarning {
+    background-color: #78350f !important;
+    color: white !important;
+    border-radius: 10px;
+}
+
+/* Info Box */
+.stInfo {
+    background-color: #0c4a6e !important;
+    color: white !important;
+    border-radius: 10px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00ffd5;
+    border-radius: 10px;
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Screener that uses advanced AI and heuristics to evaluate resumes against job requirements and identify visual mistakes." />
+    <title>AI Resume Screener & Analyzer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!-- jsPDF Library for client-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <!-- STICKY GLASS NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-brain glow-icon"></i>
+                <span>ResumeScreener<span class="logo-accent">.ai</span></span>
+            </div>
+            <button id="themeToggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN BODY WRAPPER -->
+    <main class="container">
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <h1>Elevate Your Resume with <span class="gradient-text">AI Power</span></h1>
+            <p class="hero-text">
+                Instantly screen your resume against job requirements, calculate your ATS score, and receive live feedback on common mistakes.
+            </p>
+        </section>
+
+        <!-- APP INTERFACE GRID -->
+        <div class="app-layout">
+
+            <!-- INPUT PANEL -->
+            <section class="input-panel card">
+                <h2><i class="fa-solid fa-sliders section-icon"></i> Analysis Setup</h2>
+                
+                <!-- DRAG AND DROP ZONE -->
+                <div class="form-group">
+                    <label>Upload Resume</label>
+                    <div id="dropzone" class="upload-zone">
+                        <input type="file" id="resume" accept=".pdf,.txt,.md" />
+                        <div class="upload-prompt">
+                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                            <p class="main-prompt">Drag & drop your resume here, or <span>browse files</span></p>
+                            <p class="sub-prompt">Supports PDF, TXT, and Markdown files</p>
+                        </div>
+                    </div>
+
+                    <!-- SELECTED FILE INFO -->
+                    <div id="fileInfo" class="file-info hidden">
+                        <div class="file-details">
+                            <i class="fa-solid fa-file-pdf pdf-file-icon"></i>
+                            <div class="file-meta">
+                                <span id="fileName" class="file-name">resume.pdf</span>
+                                <span id="fileSize" class="file-size">1.2 MB</span>
+                            </div>
+                        </div>
+                        <button id="removeFile" class="remove-btn" title="Remove file" onclick="resetForm()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JOB DESCRIPTION -->
+                <div class="form-group">
+                    <label for="job_description">Job Description <span class="optional-tag">(Optional)</span></label>
+                    <textarea id="job_description" rows="6" placeholder="Paste the target job description here to compare skill sets and compute a semantic match score..."></textarea>
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="buttons">
+                    <button class="analyze-btn" onclick="analyzeResume()">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                        Analyze Resume
+                    </button>
+                </div>
+
+                <p class="live-note">
+                    <i class="fa-solid fa-circle-info"></i> Results refresh automatically as you type or change files.
+                </p>
+            </section>
+
+            <!-- ANALYSIS RESULTS PANEL -->
+            <section class="results-panel">
+                
+                <!-- LOADING INDICATOR -->
+                <div id="loading" class="loading hidden card">
+                    <div class="spinner-wrapper">
+                        <div class="spinner"></div>
+                        <div class="spinner-core"></div>
+                    </div>
+                    <h3>AI is scanning your resume...</h3>
+                    <p>Extracting skills, computing match relevance, and running mistake checks.</p>
+                </div>
+
+                <!-- RESULTS TARGET -->
+                <div id="result" class="result-section hidden">
+                    <!-- Dynamic results will be injected here -->
+                </div>
+
+                <!-- DEFAULT WELCOME PLACEHOLDER -->
+                <div id="welcomePlaceholder" class="welcome-placeholder card">
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-file-import placeholder-icon"></i>
+                        <h3>Ready for Analysis</h3>
+                        <p>Upload a resume on the left to view your ATS score, detected skills, spelling suggestions, and feedback on common mistakes.</p>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- EDITOR & CHATBOT PANEL (HIDDEN BY DEFAULT) -->
+        <div id="editorChatbotPanel" class="editor-chatbot-layout card hidden">
+            <div class="panel-header">
+                <h2><i class="fa-solid fa-file-pen section-icon"></i> AI Resume Editor & Chatbot</h2>
+                <p>Edit your resume text directly, chat with the AI assistant to optimize sections, and export the updated copy as a PDF.</p>
+            </div>
+            
+            <div class="editor-chatbot-grid">
+                <!-- LEFT PANEL: RESUME TEXT EDITOR -->
+                <div class="editor-panel-wrapper">
+                    <div class="editor-controls">
+                        <label for="resumeTextEditor"><i class="fa-solid fa-code"></i> Resume Plain Text</label>
+                        <div class="editor-actions">
+                            <button id="autoFixBtn" class="action-btn secondary-btn" onclick="triggerAutoFix()">
+                                <i class="fa-solid fa-magic-wand-sparkles"></i> Auto-Fix Mistakes
+                            </button>
+                            <button id="downloadPdfBtn" class="action-btn primary-btn" onclick="downloadResumePDF()">
+                                <i class="fa-solid fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="resumeTextEditor" rows="18" placeholder="Resume text will appear here after analysis. You can edit it directly..."></textarea>
+                </div>
+                
+                <!-- RIGHT PANEL: CHATBOT -->
+                <div class="chatbot-panel-wrapper">
+                    <label><i class="fa-solid fa-comments"></i> Chat with AI Assistant</label>
+                    <div class="chat-container">
+                        <div id="chatMessages" class="chat-messages">
+                            <div class="chat-message assistant">
+                                <p>Hi! I'm your AI Resume Assistant. You can ask me to write a professional summary, add skills, rewrite your experience, or fix the mistakes listed above!</p>
+                            </div>
+                        </div>
+                        <div class="chat-input-wrapper">
+                            <input type="text" id="chatInput" placeholder="Ask AI to make changes (e.g. 'Fix grammar', 'Make summary sound senior')..." />
+                            <button id="sendChatBtn" class="send-chat-btn" onclick="sendChatMessage()">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 ResumeScreener.ai | Powered by Gemini 3.5 Flash</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
