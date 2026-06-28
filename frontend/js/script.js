@@ -1,6 +1,6 @@
 // Resolve the API base URL. Replace this with your own Render URL (e.g. https://your-app.onrender.com) after deploying.
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
-const API_BASE = isLocal ? "http://127.0.0.1:5000" : "https://ats-ai-resume-checker-backend.onrender.com";
+const API_BASE = isLocal ? "http://127.0.0.1:5000" : "https://ats-ai-resume-checker.onrender.com";
 
 let liveAnalyzeTimer = null;
 let chatHistory = []; // Stores conversation context: { role: 'user'|'model', text: '...' }
