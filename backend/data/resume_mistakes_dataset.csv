@@ -1,52 +1,203 @@
-text,labels
-"John Doe. experienced software developer. python sql javascript docker. worked at abc company. built web application. managed a team. contact: john@email.com, 123-456-7890. projects: - web scraper: scraped data using python. - chat app: built socket server. achievements: reduced latency by 20%.",grammar_or_typo
-"Resume of Alice. contact: alice@email.com. Skills: Java, HTML. I am developer.",too_short,missing_experience,missing_projects,no_bullets
-"Resume of Bob. python developer. teh managment is good adn I recieve things. contact: 555-0199.",grammar_or_typo,too_short,no_bullets,missing_skills,missing_experience,missing_projects
-"Professional Resume. Experienced Software Engineer with 5 years experience in building web apps. Technical Skills: Java, Spring Boot, MySQL, AWS, Git. Work Experience: Senior Software Engineer at TechCorp (3 years): led backend migration. Software Engineer at DevInc (2 years): developed features. Projects: - E-commerce backend: built microservices. - Cloud migration: moved apps to AWS. Achievements: * Improved query speed by 30%. * Reduced cloud costs by 15%. Contact: contact@engineer.com, +1-555-0123.",
-"Resume of Emily. contact: emily@email.com, 555-0188. Experience: Frontend Developer at Alpha Corp (2 years): designed and developed UI components. UI Engineer at Beta Inc (1 year): collaborated with designers. Skills: HTML, CSS, JavaScript, React.",missing_projects,weak_impact
-"resume. contact: 1234567. no other info.",too_short,missing_skills,missing_experience,missing_projects,no_bullets,weak_impact,missing_contact
-"Jane Miller. Python Developer. contact: jane.m@email.com, 555-0102. Experienced in writing scripts for data analytics. I do a lot of Python, and some JavaScript. No projects section or bullets.",too_short,missing_projects,no_bullets,weak_impact
-"Michael Johnson. Experienced Project Manager with 10 years experience. Managed team of 20 people. Budget: $1M. Contact: mike@pm.com, 123-123-1234. Experience: Lead PM at MegaCorp (6 years), Senior PM at StartUp (4 years). Skills: Agile, Scrum, Jira, leadership. Bullet points: - Delivered project on time. - Increased revenue by 10%. - Managed stakeholder expectations.",
-"Software Engineer Resume. Contact: test@test.com. Experience: coder. I code and write software. No bullets, no metrics, very short. Skills: none listed. Projects: none.",too_short,missing_skills,missing_projects,no_bullets,weak_impact
-"David Wilson. email: david@wilson.com, phone: 555-9999. Skills: NodeJS, React, Express, MongoDB. Projects: - E-commerce site: built using React and Node. - Task Manager: built using Express. Experience: Junior dev at WebScale (1 year). Achievements: - Refactored codebase.",weak_impact
-"Robert Brown. Contact details: robert@brown.net. 15 years experience in Java and C++. Worked as Principal Architect. Skills: Java, C++, Spring, Docker. Bullets: - Designed microservices architecture. - Guided team of 10. - Migrated legacy database.",weak_impact,missing_projects
-"Resume of Susan. Susan Green. contact: susan@email.com. 5 years in marketing. Managed marketing campaigns. No skills section, no projects section, no bullets.",missing_skills,missing_projects,no_bullets,weak_impact
-"Experienced Data Scientist. contact: data@science.com. Skills: Python, R, SQL, TensorFlow, PyTorch. Experience: Data Scientist at Insight Corp (3 years). Projects: - Fraud detection model. - Recommendation engine. Bullets: * Built fraud detection pipeline * Trained recommendation system",weak_impact
-"Resume for Internship. Student at State University. Contact: student@uni.edu. Skills: Python, Java. Experience: none. Projects: - Class project: built a simple calculator. No bullets used here. No metrics.",too_short,missing_experience,no_bullets,weak_impact
-"Senior DevOps Engineer. email: devops@cloud.com. 8 years experience. Skills: AWS, Docker, Kubernetes, Git, Jenkins. Experience: DevOps Lead at CloudCorp (4 years). Bullets: - Automated deployment pipeline, reducing deploy time by 40%. - Configured Kubernetes cluster. - Managed cloud infrastructure.",missing_projects
-"Sarah Connor. Senior Frontend Architect. contact: sarah.connor@cyberdyne.io, +1-800-555-1984. 8 years of experience building scalable web applications. Skills: HTML5, CSS3, JavaScript, TypeScript, React, Redux, Next.js, Jest, Webpack. Work Experience: Lead Frontend Engineer at Skynet Systems (4 years): - Led a team of 5 frontend developers to migrate a legacy app to Next.js. - Improved page load performance by 45% using code-splitting and server-side rendering. - Configured CI/CD deployment pipelines using GitHub Actions. Senior UI Developer at TechFuture (4 years): - Designed and built a reusable component library, reducing feature development time by 30%. - Mentored junior developers and established coding standards. Projects: - Automated Test Dashboard: built with React and Jest, reducing test run feedback loops by 20%. - E-commerce Platform: engineered frontend checkout flow serving 1M+ active users.",
-"Alex Mercer. Junior Full-Stack Developer. contact: alex.mercer@gentek.org. 1 year experience in software engineering. Skills: Python, JavaScript, Express, React, PostgreSQL, Docker, Git. Work Experience: Associate Developer at BioTech Systems (1 year): - Contributed to backend API features using Express and Node. - Wrote unit tests for database routes using Jest. Projects: - Infection Tracker: data visualization dashboard utilizing React and Pandas. - Personal Portfolio: simple static site deployed to Netlify. Bullets used: - Contributed to daily standups. - Wrote clean code.",weak_impact
-"DevOps Specialist. Docker, Kubernetes, Terraform. contact: devops-expert@infra.net. Wrote code and automated deployments. Moved servers to AWS.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Professional Scrum Master. contact: scrum.master@agile.org. Skills: Agile, Scrum, Kanban, Jira, Confluence, leadership, communication. Experience: Scrum Master at AgileSolutions (5 years). Helped teams deploy faster and remove blockers. Led daily standups and sprint planning. Projects: none listed.",missing_projects,no_bullets,weak_impact
-"Resume for Data Analyst Position. contact: analyst@data.net, 555-1122. Skills: SQL, Python, Excel, Tableau, PowerBI. Experience: Data Analyst at RetailGiant (2 years). Analyzed sales data, generated Tableau dashboards, wrote SQL queries to extract customer insights. Projects: - Customer segmentation analysis: clustered customers using KMeans.",no_bullets,weak_impact
-"Elena Rostova. QA Automation Engineer. contact: elena.r@qa-leads.com, 555-0987. Skills: Java, Selenium, Cypress, JUnit, Postman, CI/CD, Git. Experience: QA Engineer at TestLab (3 years): - Developed automated test scripts using Selenium Webdriver and JUnit, decreasing regression test cycle time by 50%. - Configured automated test runs in Jenkins pipelines. - Documented bugs and collaborated with developers. Projects: - E-commerce test suite: wrote 500+ integration test cases. - API test suite: built automation runner for REST endpoints.",missing_projects
-"Resume of James. contact: james@webdev.com. Python developer. Worked at some company. Built websites. No skills list, no bullets.",too_short,missing_skills,missing_experience,missing_projects,no_bullets,weak_impact
-"Kevin Mitnick. Cybersecurity Analyst. contact: kevin.m@mitnicksec.com, +1-555-31337. 6 years experience in security. Skills: Network Security, Cybersecurity, OWASP, Linux, Python, Bash, Shell. Work Experience: Security Architect at SecuCorp (4 years): - Conducted vulnerability assessments and penetration testing on corporate networks. - Implemented intrusion detection systems, reducing security incidents by 35%. - Trained 100+ employees on social engineering defense. Security Analyst at NetDefense (2 years): - Monitored firewall logs and resolved security alerts. Projects: - Port Scanner: custom multithreaded network scanning utility written in Python. - Vulnerability Lab: isolated virtualization environment built with Docker.",missing_projects,no_bullets
-"Resume of Sophia. Skills: React, CSS, HTML. contact: sophia@email.com. I design beautiful user interfaces. No experience, no projects, no bullets.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Thomas Anderson. Software Engineer. contact: neo@matrix.net. Skills: C++, Java, Python, Go, SQL, Linux, Git. Work Experience: Software Developer at Metacortex (3 years): - Maintained legacy databases and optimized SQL queries. - Wrote shell scripts to automate log rotations. - Participated in code reviews. Projects: - Matrix Simulator: built a distributed simulation using Go.",no_bullets,weak_impact
-"Resume of Arthur Dent. contact: arthur.dent@hitchhiker.org. 10 years experience in tea drinking and writing. Skills: Communication, Time Management. No technical skills, no projects, no bullets.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Bruce Wayne. Lead Software Engineer. contact: bruce@waynecorp.com. 7 years experience. Skills: Python, SQL, C++, AWS, Docker, Kubernetes, Git, leadership. Experience: Tech Lead at Wayne Enterprises (4 years): - Designed and deployed a cloud-based video analysis platform using AWS and Docker. - Led a team of 6 engineers to deliver projects on time and under budget. - Optimized data pipelines, decreasing latency by 40%. Senior Developer at GothamTech (3 years): - Wrote clean backend microservices in Python. - Managed postgres databases. Projects: - Batcomputer OS: built custom Linux kernel modules.",missing_projects
-"Resume of Clark Kent. Reporter and writer. contact: clark.kent@dailyplanet.com. 5 years experience in writing articles. Skills: Communication, problem solving, teamwork. No technical skills, no bullets.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Diana Prince. Senior Data Scientist. contact: diana@prince.org, 555-8888. 6 years experience. Skills: Python, R, SQL, Machine Learning, Deep Learning, TensorFlow, PyTorch, Pandas, NumPy, Tableau. Experience: Senior Data Scientist at Amazon (3 years): - Developed recommendation models using PyTorch, increasing sales conversion by 12%. - Managed large data pipelines with Spark. Data Scientist at Netflix (3 years): - Engineered predictive models for user churn. Projects: - Image Recognition App: built with TensorFlow and OpenCV, achieving 98% accuracy.",missing_projects
-"Resume of Barry Allen. Fast coder. contact: barry@centralcity.gov. I write JavaScript very fast. HTML, CSS, React. No bullets, no metrics.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Hal Jordan. Project Manager. contact: hal.jordan@greenlantern.org. 8 years experience. Skills: Project Management, Agile, Jira, leadership, communication. Experience: Project Manager at Ferris Aircraft (5 years): - Managed aircraft telemetry system software project. - Led daily standups and sprint planning. PM at TechCorp (3 years). Projects: - Telemetry Dashboard: coordinated delivery of React dashboard.",weak_impact,no_bullets
-"Resume of Peter Parker. Web developer. contact: spidey@dailybugle.com. Skills: HTML, CSS, JavaScript, React. Work Experience: Web Dev at Daily Bugle (2 years). Projects: - Web shooter simulator. No experience section, no bullets.",too_short,missing_experience,no_bullets,weak_impact
-"Victor Stone. Full Stack Engineer. contact: cyborg@star-labs.com, 555-0101. 5 years experience. Skills: Java, Spring Boot, MySQL, Docker, AWS, Angular, NodeJS, Git, CI/CD. Experience: Software Engineer at STAR Labs (5 years): - Engineered distributed backend REST APIs using Spring Boot and Java. - Deployed microservices on AWS using Kubernetes, raising service uptime to 99.9%. - Optimized query response times by 25%. Projects: - Integrated Diagnostic System: Java database app checking system health.",missing_projects
-"Resume of Selina Kyle. Thief and tester. contact: selina@cat.net. Skills: Python, Selenium, Postman. I test web applications for security vulnerabilities. No bullets, no experience listed, no projects.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Wally West. Frontend Engineer. contact: wally@fastest.net. Skills: HTML, CSS, JS, React, Tailwind, Git. Experience: Frontend Developer at SpeedForce (2 years). Projects: - Interactive speed calculator. No bullets, no numbers.",too_short,missing_experience,no_bullets,weak_impact
-"Oliver Queen. Project Manager. contact: oliver@queenindustries.com. Skills: leadership, project management, Jira. Experience: PM at Queen Industries (5 years). Projects: none. No bullets, no metrics.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Resume of Kara Danvers. Reporter and coder. contact: kara@catco.com. 3 years experience. Skills: Python, SQL, HTML, CSS. Experience: Coder at CatCo Media. No bullets, no projects, no details.",too_short,missing_projects,no_bullets,weak_impact
-"John Constantine. Systems Administrator. contact: john@occult.net. 10 years experience. Skills: Linux, Bash, Shell, Network Security, Python, Docker. Experience: SysAdmin at LondonTech (6 years): - Maintained 50+ Linux servers. - Wrote bash scripts to automate backups. Projects: - Backup Daemon: custom python daemon for automated cloud storage uploads.",no_bullets,weak_impact,missing_projects
-"Resume of Zatanna. contact: zatanna@magic.com. Skills: JavaScript, React, Node. I make websites disappear. No bullets, no experience.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Billy Batson. Junior Developer. contact: billy@shazam.org. Skills: Python, Git. Experience: none. Projects: none. No bullets.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
-"Resume of Dinah Lance. Team leader. contact: blackcanary@birds.org. Skills: Leadership, communication. PM experience. No technical skills, no bullets, no projects.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Ray Palmer. Embedded Systems Engineer. contact: ray@palmertech.com. 8 years experience. Skills: C++, C, Python, Linux, system design. Experience: Hardware Engineer at Palmer Technologies (5 years): - Designed firmware for miniature sensor networks in C++. - Optimized memory usage by 40% on microcontrollers. Projects: - Nano-sensor firmware: C codebase for real-time telemetry.",missing_projects
-"Resume of Roy Harper. Systems engineer. contact: roy@arsenal.org. Skills: Linux, Bash, Git. Experience: 2 years. Projects: none. No bullets.",too_short,missing_projects,no_bullets,weak_impact,missing_experience
-"Iris West. Content Editor. contact: iris@centralcitycitizen.com. 5 years experience. Skills: Communication, editing. Experience: Journalist at Citizen (5 years). Projects: none. No bullets.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Resume of Lois Lane. Senior Reporter. contact: lois@dailyplanet.com. 10 years experience. Skills: Communication, leadership, editing, Jira. Experience: Lead Reporter at Daily Planet (6 years). Projects: none. No bullets, no technical skills.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Jimmy Olsen. Photographer and coder. contact: jimmy@dailyplanet.com. Skills: HTML, CSS, Git. Experience: 1 year. Projects: personal site. No bullets.",too_short,missing_experience,no_bullets,weak_impact
-"Resume of Lex Luthor. Lead Developer. contact: lex@lexcorp.com. 15 years experience. Skills: C++, Python, SQL, AWS, Kubernetes, system design, software architecture, leadership. Experience: Chief Architect at LexCorp (10 years): - Designed and built global data center infrastructure. - Directed team of 50 developers. - Reduced operating expenses by 30% using Kubernetes container clustering. Projects: - LexOS: custom distributed operating system written in C++.",missing_projects
-"Resume of Harvey Dent. Project Manager. contact: harvey@gotham.gov. 6 years experience. Skills: Project Management, Agile, Scrum, Jira. PM at City Hall. Projects: none. No bullets.",missing_skills,missing_projects,no_bullets,weak_impact,missing_experience
-"Barbara Gordon. Database Administrator. contact: oracle@gotham.gov. 5 years experience. Skills: SQL, MySQL, PostgreSQL, Oracle, Linux, Bash, Git, Python, cybersecurity. Experience: DBA at Gotham Police (5 years): - Designed and optimized database schemas, reducing query latency by 35%. - Configured database replicas on PostgreSQL. - Implemented database backup scripts and access control. Projects: - Criminal DB search engine: indexing system using Python and SQL.",missing_projects
-"Resume of Dick Grayson. Lead developer. contact: nightwing@bludhaven.org. Skills: Python, SQL, React, Git. Experience: 4 years. Projects: none. No bullets.",too_short,missing_projects,no_bullets,weak_impact,missing_experience
-"Jason Todd. QA Tester. contact: redhood@gotham.com. Skills: Postman, Selenium. Experience: 2 years testing. Projects: none. No bullets.",too_short,missing_experience,missing_projects,no_bullets,weak_impact
+text,labels,target_score
+"Johnathan Doe. Senior Software Architect. contact: john.doe@techlead.com, +1-555-0199. Over 8 years experience designing and building scalable web architectures. Technical Skills: Python, Go, Java, JavaScript, AWS, Docker, Kubernetes, PostgreSQL, Redis, REST APIs, Git. Professional Experience:
+Lead Architect at CloudScale Solutions (2021 - Present):
+- Architected high-performance microservices backend in Go and Python, handling 15M+ daily API calls.
+- Migrated legacy monolithic database to partitioned PostgreSQL cluster, reducing query latency by 45%.
+- Orchestrated Docker container deployments on Kubernetes EKS clusters, achieving 99.99% uptime.
+Senior Software Engineer at WebFlow Inc (2018 - 2021):
+- Led development of real-time streaming backend, increasing data processing throughput by 60%.
+- Designed and implemented robust CI/CD deployment pipelines using GitLab CI and Terraform.
+Projects:
+- Distributed Task Scheduler: Custom open-source task scheduling library in Go, starred by 2k+ developers.
+- Real-time Analytics Dashboard: Built scalable WebSocket data pipeline serving 50k concurrent users.",,96
+"Alice Johnson. Front-end Engineer. contact: alice.j@devflow.io. Experienced React developer specializing in web accessibility and state management. Skills: JavaScript, TypeScript, React, HTML5, CSS3, Redux, Next.js, Webpack, Tailwind CSS, Jest. Work History:
+Frontend Developer at DesignForge (2021 - 2024):
+- Engineered pixel-perfect React application interfaces following WCAG 2.1 accessibility guidelines.
+- Optimized bundle sizes by 35% through dynamic code-splitting and Webpack optimization.
+- Built reusable UI component library using Tailwind CSS, speeding up new feature delivery by 25%.
+Junior Frontend Developer at StartupHub (2020 - 2021):
+- Maintained legacy jQuery websites and converted key workflows to modern React components.
+Projects:
+- Portfolio Creator: Static React app for portfolio builds.
+- CSS Grid Playground: Interactive web helper for design layout tests.",,90
+"Bob Smith. Fullstack Software Engineer. contact: bob.smith@work.net. 3 years experience in Javascript and Python development. Technical Skills: Node.js, Express, React, Python, Flask, MongoDB, SQL, Git. Work Experience:
+Fullstack Developer at TechCorp (2022 - Present):
+- Built REST APIs using Express and Node.js for client billing operations.
+- Maintained frontend React screens and dashboards.
+Projects:
+- Task Manager App: Simple React planner.
+- Recipe API: Flask endpoint for recipes.",weak_impact,75
+"Resume of Charlie. Python Dev. Skills: Python, Django, SQL. Experience: Developer at SoftCo (2022 - 2024). I worked on the backend API and database schemas. I was in charge of code refactoring and writing unit tests. Did API testing.","missing_projects,no_bullets,weak_impact",58
+"David Clark. Backend Developer. contact: david.clark@cloudmail.net. 4 years experience in building APIs. Skills: Node.js, Express, PostgreSQL, AWS, Docker. Work Experience:
+Backend dev at Innovate Inc (2021 - 2024):
+- Built microservices using Node.js and Express.
+- Configured AWS EC2 instances.
+Projects: none listed.","missing_projects,weak_impact,no_bullets",56
+"Ethan Hunt. Software Developer Intern. contact: ethan@imf.org. Student at State University studying Computer Science. Skills: C++, Python, HTML, CSS. Experience: none. Projects:
+Calculator App: simple command line tool.
+Weather Webpage: HTML webpage showing static weather values.","too_short,missing_experience,no_bullets,weak_impact",42
+"Developer resume. Skills: Java, C#, SQL. no other details provided. contact: developer@mail.com.","too_short,missing_experience,missing_projects,no_bullets,weak_impact",35
+"Senior Java Engineer. contact: java-expert@cloud.com. 10 years experience in enterprise Java apps. Skills: Java, Spring Boot, Hibernate, Oracle SQL, Microservices, Docker, Git. Work Experience:
+Tech Lead at FinTech Global (2018 - Present):
+- Led a team of 8 backend engineers to design and deploy core transactional billing engine.
+- Re-architected batch processing system, improving throughput by 50% and reducing runtime by 3 hours.
+- Collaborated with product teams to specify API schemas and design integration tests.
+Senior Java Dev at EnterpriseCorp (2014 - 2018):
+- Optimized SQL queries, improving overall response times by 30%.
+Projects:
+- Payment Gateway Integration: Integrates Stripe and PayPal API flows securely.
+- Core Banking Dashboard: Microservices-based analytics viewer.",,95
+"Alex Mercer. Junior Full-Stack Developer. contact: alex.mercer@gentek.org. 1 year experience in software engineering. Skills: Python, JavaScript, Express, React, PostgreSQL, Docker, Git. Work Experience:
+Associate Developer at BioTech Systems (2023 - 2024):
+- Contributed to backend API features using Express and Node.
+- Wrote unit tests for database routes using Jest.
+Projects:
+- Infection Tracker: data visualization dashboard utilizing React and Pandas.
+- Personal Portfolio: simple static site deployed to Netlify.",weak_impact,78
+"Resume of Susan. Susan Green. contact: susan@email.com. 5 years in marketing. Managed marketing campaigns. No skills section, no projects section, no bullets.","missing_skills,missing_projects,no_bullets,weak_impact",48
+"Dr. Eleanor Vance. Principal Data Scientist. contact: eleanor@vance-labs.ai, +1-555-0311. PhD in Machine Learning. 6 years experience building production ML models and data pipelines. Skills: Python, R, PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, SQL, Spark, Docker, AWS. Professional Experience:
+Lead Data Scientist at InsightAI (2021 - Present):
+- Designed and deployed deep learning recommendation model, boosting platform conversion rates by 22%.
+- Engineered scalable PySpark pipeline processing 10TB+ daily user click logs, reducing latency by 40%.
+- Managed a team of 4 ML engineers to design model monitoring systems using MLflow.
+Data Scientist at PredictiveCorp (2018 - 2021):
+- Developed machine learning models for user churn prediction, reducing customer churn by 15%.
+- Implemented automated feature engineering workflows, improving ML pipeline velocity by 30%.
+Projects:
+- Custom Neural Translation System: Machine translation model built with PyTorch, achieving 42 BLEU score.
+- Fraud Detection Platform: Real-time fraud detection engine scoring transactions within 50ms.",,96
+"Fiona Gallagher. Machine Learning Engineer. contact: fiona@gallagher.net. Experienced in training computer vision models. Skills: Python, TensorFlow, Keras, OpenCV, PyTorch, SQL, Git. Work Experience:
+ML Engineer at VisionTech (2021 - 2024):
+- Trained convolutional neural networks for object detection.
+- Wrote image preprocessing scripts using OpenCV.
+Projects:
+- Face Detector: Trained simple MTCNN face locator.
+- Document OCR: OCR scanner utilizing Tesseract and OpenCV.",weak_impact,77
+"Data Analyst Resume. contact: analyst@data-systems.com. Skills: SQL, Python, Excel, Tableau, PowerBI. Experience: Data Analyst at RetailGiant (2022 - Present). Analyzed sales data, generated Tableau dashboards, wrote SQL queries to extract customer insights.","missing_projects,no_bullets,weak_impact",56
+"Senior Data Analyst. contact: senior.analyst@metrics.com. 5 years experience extracting business insights. Skills: Python, R, SQL, Tableau, PowerBI, Excel, Git, stats models. Work Experience:
+Lead Analyst at MetricCorp (2021 - Present):
+- Built automated financial dashboard in Tableau, reducing manual reporting hours by 15 hours per week.
+- Formulated A/B testing framework for marketing team, increasing conversion tracking accuracy by 25%.
+- Wrote optimized SQL queries on Snowflake database, improving query times by 40%.
+Projects:
+- Customer Lifetime Value model: Predicted customer value using survival analysis.
+- Web Scraper: Scraped market competitor pricing.",,92
+"Gregory House. Lead DevOps Engineer. contact: greg.house@infra-labs.org, +1-555-0815. Over 7 years experience automating large-scale cloud infrastructure. Skills: AWS, Azure, Terraform, Ansible, Docker, Kubernetes, Jenkins, GitHub Actions, Linux, Bash, Prometheus. Experience:
+Principal Infrastructure Engineer at CloudCore (2021 - Present):
+- Automated infrastructure deployment using Terraform, reducing setup time for environments by 80%.
+- Architected multi-region Kubernetes cluster topology, increasing system fault-tolerance to 99.99%.
+- Configured automated monitoring with Prometheus and Grafana, reducing incident resolution time by 35%.
+DevOps Engineer at SystemsInc (2019 - 2021):
+- Created robust CI/CD deployment pipelines using Jenkins, reducing release cycles from bi-weekly to daily.
+Projects:
+- Terraform AWS Boilerplate: Terraform templates for multi-tier AWS setups, starred 1.5k times.
+- Cloud Cost Optimizer: Custom Python utility that identifies and destroys idle AWS volumes.",,94
+"DevOps Specialist. Docker, Kubernetes, Terraform. contact: devops-expert@infra.net. Wrote code and automated deployments. Moved servers to AWS.","too_short,missing_experience,missing_projects,no_bullets,weak_impact",45
+"Systems Administrator. contact: sysadmin@it-corp.com. Skills: Linux, Windows Server, Active Directory, Cisco Networking, Bash, Python, Git. Experience: IT Admin at CorpTech (2020 - 2023). Managed corporate network, set up virtual servers, handled backup restoration and system security patches. Fixed bugs.","missing_projects,no_bullets,weak_impact",58
+"Elena Rostova. QA Automation Engineer. contact: elena.r@qa-leads.com, +1-555-0987. Skills: Java, Selenium, Cypress, JUnit, Postman, CI/CD, Git. Experience:
+QA Lead at TestLab (2021 - Present):
+- Developed automated regression test suite using Cypress and Java, decreasing test cycle time by 50%.
+- Integrated Selenium test runner into Jenkins CI/CD deployment pipeline.
+- Documented and logged 200+ product bugs in Jira, collaborating closely with backend engineers.
+Projects:
+- E-commerce test suite: Automated Cypress testing of shopping checkout flows.
+- API automated runner: Automated REST endpoint checking with Newman.",,90
+"QA manual tester. contact: tester@mail.com. Skills: Manual Testing, Jira, Bug writing, Test Cases. Experience: Tester at QA Solutions (2022 - 2024). Wrote test cases, executed manual web tests, reported issues in Jira. No automation or scripting skills.","missing_projects,no_bullets,weak_impact",54
+"Michael Scott. Senior Product Manager. contact: michael@dundermifflin.com, +1-555-0155. 6 years experience leading cross-functional teams and launching digital products. Technical Skills: Agile, Scrum, Product Strategy, JIRA, Confluence, SQL, Amplitude, Product Roadmaps. Work Experience:
+Product Manager at Dunder Digital (2021 - Present):
+- Led launch of mobile document scanner app, acquiring 500k active users within 6 months.
+- Defined product vision and roadmaps, increasing feature delivery velocity by 30% using Agile Scrum.
+- Conducted data analytics using Amplitude, improving user retention rates by 15%.
+Product Owner at PaperTech (2019 - 2021):
+- Managed product backlog and stakeholder requirements, reducing bug density by 25%.
+Projects:
+- E-commerce Portal Overhaul: Redesigned B2B checkout flow, increasing conversion rate by 18%.
+- Customer Feedback Pipeline: Integrates Slack and Zendesk to track user request signals.",,93
+"Project Manager. contact: pm@innovate.org. Skills: Project Management, Agile, Jira, Scrum, Leadership. Experience: PM at TechCorp (2021 - 2024). Managed software delivery teams, organized standups, and reported status to stakeholders. Ensured projects were completed on time.","missing_projects,no_bullets,weak_impact",59
+"Sophia Loren. UI/UX Designer. contact: sophia@designlab.com, +1-555-0744. 5 years experience creating beautiful, user-centered digital interfaces. Skills: Figma, Adobe XD, Illustrator, Wireframing, Prototyping, User Research, HTML, CSS, JavaScript. Work History:
+Lead Product Designer at CreativeStudio (2021 - Present):
+- Redesigned mobile banking application, increasing user satisfaction rating by 40%.
+- Constructed comprehensive Figma design system, reducing design-to-development handoff time by 35%.
+- Facilitated 20+ usability testing sessions, translating findings into actionable UX flows.
+Projects:
+- Travel Booking App Concept: Complete UI design flow and high-fidelity prototype in Figma.
+- Smart Home UX Case Study: User research and wireframes for IoT home management.",,91
+"Web Designer. Skills: Photoshop, Illustrator, HTML. contact: webdesigner@mail.com. Experience: Designer at WebAgency (2022 - 2024). Created banners and landing page templates.","missing_projects,no_bullets,weak_impact",54
+"Jane Miller. HR Specialist & Recruiter. contact: jane.m@hrleads.com, +1-555-0922. Skills: Talent Acquisition, HR Policy, Employee Relations, Applicant Tracking Systems (ATS), LinkedIn Recruiter. Experience:
+HR Coordinator at TalentFirst (2021 - Present):
+- Managed recruitment lifecycle for 50+ open positions, reducing time-to-hire metric by 25%.
+- Structured standard employee onboarding program, improving first-year retention rate by 20%.
+- Handled employee relations and conducted annual performance reviews.
+Projects:
+- Automated ATS Integration: Connected LinkedIn API to greenhouse CRM.
+- Diversity Hiring Blueprint: Guidelines and workshops for inclusive hiring processes.",,89
+"Recruitment Intern. contact: intern@recruiting.net. Skills: Sourcing, LinkedIn, Scheduling. Experience: Intern at HR Agency (2023 - 2024). Screened resumes, scheduled candidate interviews, wrote email templates. No projects, no metrics.","missing_projects,no_bullets,weak_impact",52
+"Ryan Howard. Digital Marketing Manager. contact: ryan@wunderkind.com, +1-555-0822. Skills: SEO, SEM, Google Analytics, HubSpot, Content Strategy, Copywriting, SQL. Professional Experience:
+Marketing Manager at GrowthHacks (2021 - Present):
+- Executed SEO strategy that grew organic search traffic by 80% and generated 10k+ warm leads.
+- Managed $50k monthly AdWords budget, reducing customer acquisition cost (CAC) by 30%.
+- Designed email automation workflows in HubSpot, increasing email click-through rate by 15%.
+Projects:
+- Lead Generation Funnel: Engineered custom landing page and newsletter signup loop.
+- Brand Strategy Launch: Complete relaunch of platform visual identity and messaging guidelines.",,92
+"Sales Representative. contact: sales@corp.com. Skills: Cold calling, Negotiation, Salesforce, Sales pipeline. Experience: Account Executive at SalesForce (2022 - 2024). Generated sales leads, negotiated contracts, and logged data in Salesforce. Achieved monthly quota.","missing_projects,no_bullets,weak_impact",58
+"Christian Bale. Financial Analyst. contact: christian@bale-capital.com, +1-555-0944. Skills: Financial Modeling, SQL, Python, Excel (VBA), Bloomberg Terminal, Valuation, Tableau. Work Experience:
+Senior Analyst at Bale Capital (2021 - Present):
+- Constructed financial models for LBO transactions, reducing analysis turnaround times by 40%.
+- Automated portfolio data extraction pipelines using Python, saving 10 hours of manual work weekly.
+- Prepared quarterly valuation reports for stake management decks.
+Projects:
+- Algorithmic Portfolio Optimizer: Python script using Markowitz efficient frontier.
+- Stock Sentiment Scraper: Scraped financial news headlines to predict price movements.",,92
+"Business Analyst. contact: ba@analytics.org. Skills: Requirements gathering, SQL, Excel, Scrum. Experience: BA at TechConsult (2022 - 2024). Wrote user stories and mapped data flows. Assisted Scrum Masters.","missing_projects,no_bullets,weak_impact",56
+"Resume of Bob. python developer. teh managment is good adn I recieve things. contact: 555-0199. Skills: Python, Django, SQL. Experience: Python Developer at WebWorks (2022 - 2024). I code backend APIs. Projects:
+- E-commerce App: Django backend.
+- Weather API: Flask endpoints.",grammar_or_typo,72
+"Jane Miller. Python Developer. contact: jane.m@email.com. Experienced in writing scripts for data analytics. I do a lot of Python, and some JavaScript. Technical Skills: Python, SQL, Javascript. Experience: Dev at CodeLab (2022 - 2024). Projects:
+- Analytics platform: built with Python.","grammar_or_typo,weak_impact",68
+"David Wilson. email: david@wilson.com, phone: 555-9999. Skills: NodeJS, React, Express, MongoDB. Projects:
+- E-commerce site: built using React and Node.
+- Task Manager: built using Express.
+Experience: Junior dev at WebScale (2023 - 2024). Achievements:
+- Refactored Node.js codebase.",weak_impact,78
+"Robert Brown. Contact details: robert@brown.net. 15 years experience in Java and C++. Worked as Principal Architect. Skills: Java, C++, Spring, Docker. Bullets:
+- Designed microservices architecture.
+- Guided team of 10.
+- Migrated legacy database.","weak_impact,missing_projects",70
+"Resume of Susan. Susan Green. contact: susan@email.com. 5 years in marketing. Managed marketing campaigns. No skills section, no projects section, no bullets.","missing_skills,missing_projects,no_bullets,weak_impact",48
+"Experienced Data Scientist. contact: data@science.com. Skills: Python, R, SQL, TensorFlow, PyTorch. Experience: Data Scientist at Insight Corp (2021 - 2024). Projects:
+- Fraud detection model.
+- Recommendation engine.
+Bullets:
+* Built fraud detection pipeline
+* Trained recommendation system",weak_impact,79
+"Senior Software Engineer Resume. contact: engineering@lead.com. 8 years experience. Skills: Python, Go, AWS, Kubernetes, Git. Experience: Lead Dev at TechGiant (2018 - Present). Projects: none. no bullets used. bad layout.","missing_projects,no_bullets,weak_impact",58
+"Senior DevOps Engineer. email: devops@cloud.com. 8 years experience. Skills: AWS, Docker, Kubernetes, Git, Jenkins. Experience: DevOps Lead at CloudCorp (2020 - 2024). Bullets:
+- Automated deployment pipeline, reducing deploy time by 40%.
+- Configured Kubernetes cluster.
+- Managed cloud infrastructure.",missing_projects,83
+"Full Stack Developer. contact: fullstack@mail.com. Skills: Node, React, Express, Postgres. Experience: Full Stack Engineer at Startup (2022 - 2024). Achievements: speed up dashboard by 30%.","missing_projects,no_bullets",64
+"Johnathan Doe. Software Architect. contact: john.doe@techlead.com. Skills: Python, Go, Java, JavaScript, AWS, Docker, Kubernetes, PostgreSQL, Redis, REST APIs, Git. Experience: Lead Architect at CloudScale Solutions (2021 - 2024). Projects: Task scheduler in Go.","no_bullets,weak_impact",62
+"Alice Johnson. React developer. contact: alice.j@devflow.io. Skills: JavaScript, TypeScript, React, HTML5, CSS3, Redux, Next.js. Experience: Frontend Developer at DesignForge (2022 - 2024). Projects: Portfolio creator in React.","no_bullets,weak_impact",60
+"Bob Smith. Fullstack Engineer. contact: bob.smith@work.net. Skills: Node.js, Express, React, Python, Flask, MongoDB, SQL, Git. Experience: Fullstack Developer at TechCorp (2022 - 2024). Projects: Task Manager App.","no_bullets,weak_impact",60
+"David Clark. Backend Developer. contact: david.clark@cloudmail.net. Skills: Node.js, Express, PostgreSQL, AWS, Docker. Experience: Backend dev at Innovate Inc (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"Fiona Gallagher. Machine Learning Engineer. contact: fiona@gallagher.net. Skills: Python, TensorFlow, Keras, OpenCV, PyTorch, SQL, Git. Experience: ML Engineer at VisionTech (2022 - 2024). Projects: OCR scanner.","no_bullets,weak_impact",58
+"Gregory House. DevOps Engineer. contact: greg.house@infra-labs.org. Skills: AWS, Azure, Terraform, Ansible, Docker, Kubernetes, Jenkins, GitHub Actions. Experience: Infrastructure Engineer at CloudCore (2022 - 2024). Projects: Cloud cost optimizer.","no_bullets,weak_impact",62
+"Elena Rostova. QA Engineer. contact: elena.r@qa-leads.com. Skills: Java, Selenium, Cypress, JUnit, Postman, CI/CD, Git. Experience: QA Lead at TestLab (2022 - 2024). Projects: E-commerce test suite.","no_bullets,weak_impact",60
+"Michael Scott. Product Manager. contact: michael@dundermifflin.com. Skills: Agile, Scrum, Product Strategy, JIRA, Confluence, SQL, Amplitude. Experience: Product PM at Dunder Digital (2022 - 2024). Projects: E-commerce Portal Overhaul.","no_bullets,weak_impact",62
+"Sophia Loren. UI/UX Designer. contact: sophia@designlab.com. Skills: Figma, Adobe XD, Illustrator, Wireframing, Prototyping, User Research. Experience: Product Designer at CreativeStudio (2022 - 2024). Projects: Travel Booking App Figma.","no_bullets,weak_impact",60
+"Ryan Howard. Marketing Manager. contact: ryan@wunderkind.com. Skills: SEO, SEM, Google Analytics, HubSpot, Content Strategy, Copywriting. Experience: Marketing Lead at GrowthHacks (2022 - 2024). Projects: Lead Generation Funnel.","no_bullets,weak_impact",62
+"Christian Bale. Financial Analyst. contact: christian@bale-capital.com. Skills: Financial Modeling, SQL, Python, Excel (VBA), Valuation. Experience: Analyst at Bale Capital (2022 - 2024). Projects: Stock Sentiment Scraper.","no_bullets,weak_impact",62
+"Systems Administrator. contact: sysadmin@it-corp.com. Skills: Linux, Windows Server, Active Directory, Cisco Networking. Experience: IT Admin at CorpTech (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"QA Manual Tester. contact: tester@mail.com. Skills: Manual Testing, Jira, Bug writing, Test Cases. Experience: Tester at QA Solutions (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",50
+"Project Manager. contact: pm@innovate.org. Skills: Project Management, Agile, Jira, Scrum, Leadership. Experience: PM at TechCorp (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"Web Designer. contact: webdesigner@mail.com. Skills: Photoshop, Illustrator, HTML. Experience: Designer at WebAgency (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",50
+"HR Coordinator. contact: hr@talentfirst.com. Skills: Talent Acquisition, HR Policy, Employee Relations, ATS. Experience: HR Coordinator at TalentFirst (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"Sales Executive. contact: sales@corp.com. Skills: Cold calling, Negotiation, Salesforce, Sales pipeline. Experience: Account Executive at SalesForce (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"Business Analyst. contact: ba@analytics.org. Skills: Requirements gathering, SQL, Excel, Scrum. Experience: BA at TechConsult (2022 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",52
+"Data Scientist Intern. contact: data@science.com. Skills: Python, SQL, Pandas, NumPy. Experience: Intern at Insight Corp (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",50
+"Fullstack Junior. contact: dev@mail.com. Skills: HTML, CSS, JavaScript, React. Experience: Junior Developer (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",48
+"Backend Coder. contact: coder@mail.com. Skills: Java, Spring Boot. Experience: Coder (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",48
+"Intern DevOps. contact: devops@mail.com. Skills: Linux, AWS, Docker. Experience: Intern (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",48
+"HR Sourcing Recruiter. contact: recruiter@talent.net. Skills: Sourcing, LinkedIn Recruiter. Experience: Recruiter (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",48
+"Content Strategy Marketer. contact: Ryan@strategy.com. Skills: Content Strategy, SEO, Copywriting. Experience: Marketer (2023 - 2024). Projects: none.","missing_projects,no_bullets,weak_impact",48

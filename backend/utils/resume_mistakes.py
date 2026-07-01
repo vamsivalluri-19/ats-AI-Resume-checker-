@@ -122,12 +122,12 @@ def _model_issue_messages(resume_text):
     if not bundle:
         return []
 
-    vectorizer = bundle.get("vectorizer")
+    vectorizer_classifier = bundle.get("vectorizer_classifier")
     classifier = bundle.get("classifier")
     mlb = bundle.get("mlb")
     label_messages = bundle.get("label_messages", LABEL_MESSAGES)
 
-    if vectorizer is None or classifier is None or mlb is None:
+    if vectorizer_classifier is None or classifier is None or mlb is None:
         return []
 
     text = _normalize_text(resume_text)
@@ -135,25 +135,30 @@ def _model_issue_messages(resume_text):
         return []
 
     try:
-        features = vectorizer.transform([text])
+        features = vectorizer_classifier.transform([text])
         if hasattr(classifier, "predict_proba"):
             scores = classifier.predict_proba(features)[0]
         else:
             raw_scores = classifier.decision_function(features)
             scores = raw_scores[0] if hasattr(raw_scores, "__len__") else raw_scores
 
+        # Run heuristic check to get codes for gating structural false positives
+        heuristic_msgs = _heuristic_issue_messages(resume_text)
+        heuristic_codes = set()
+        for label, msg in LABEL_MESSAGES.items():
+            if msg in heuristic_msgs:
+                heuristic_codes.add(label)
+
         predicted = []
         labels = list(mlb.classes_)
         for index, label in enumerate(labels):
             score = scores[index] if index < len(scores) else 0.0
             if float(score) >= 0.35:
+                # Rule-Gated Override: Eliminate ML false positives on structural issues
+                structural_codes = {"too_short", "no_bullets", "weak_impact", "missing_contact", "missing_skills", "missing_experience"}
+                if label in structural_codes and label not in heuristic_codes:
+                    continue
                 predicted.append(label_messages.get(label, label))
-
-        if not predicted and len(scores) > 0:
-            best_index = max(range(len(scores)), key=lambda idx: scores[idx])
-            if float(scores[best_index]) >= 0.55:
-                best_label = labels[best_index]
-                predicted.append(label_messages.get(best_label, best_label))
 
         return predicted
     except Exception:
@@ -316,13 +321,25 @@ def _row_labels(row):
 def train_from_dataset(dataset_path, model_path=MODEL_PATH):
     texts = []
     label_sets = []
+    csv_scores = []
 
     for row in _read_dataset_rows(dataset_path):
         text = _row_text(row)
         labels = _row_labels(row)
-        if text and labels:
+        if text:
             texts.append(text)
             label_sets.append(labels)
+            
+            # Read pre-computed target score if present under "target_score" key
+            score_val = None
+            if isinstance(row, dict) and "target_score" in row:
+                raw_score = row.get("target_score")
+                if raw_score is not None:
+                    try:
+                        score_val = float(str(raw_score).strip())
+                    except ValueError:
+                        pass
+            csv_scores.append(score_val)
 
     if not texts:
         return {"trained": False, "reason": "dataset is empty or missing text/labels"}
@@ -348,17 +365,21 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
 
     scores = []
     struct_list = []
-    for text, labels in zip(texts, label_sets):
+    for text, labels, csv_score in zip(texts, label_sets, csv_scores):
         res_skills = extract_skills(text)
-        mistakes_details = [{"code": l} for l in labels]
-        score_data = compute_ats_score_with_breakdown(
-            resume_text=text,
-            job_description="",
-            resume_skills=res_skills,
-            job_skills=[],
-            mistakes_details=mistakes_details
-        )
-        scores.append(score_data["ats_score"])
+        
+        if csv_score is not None:
+            scores.append(csv_score)
+        else:
+            mistakes_details = [{"code": l} for l in labels]
+            score_data = compute_ats_score_with_breakdown(
+                resume_text=text,
+                job_description="",
+                resume_skills=res_skills,
+                job_skills=[],
+                mistakes_details=mistakes_details
+            )
+            scores.append(score_data["ats_score"])
 
         # Extract metadata features
         num_skills = len(res_skills)
