@@ -43,6 +43,71 @@ def _load_bundle():
         return None
 
 
+def predict_resume_score(resume_text):
+    bundle = _load_bundle()
+    if not bundle or "regressor" not in bundle:
+        return None
+
+    vectorizer = bundle.get("vectorizer")
+    regressor = bundle.get("regressor")
+    classifier = bundle.get("classifier")
+    mlb = bundle.get("mlb")
+
+    if vectorizer is None or regressor is None or classifier is None or mlb is None:
+        return None
+
+    text = _normalize_text(resume_text)
+    if not text:
+        return 0
+
+    try:
+        import numpy as np
+        from backend.utils.skill_extractor import extract_skills
+        from backend.utils.experience import extract_experience
+        import re
+
+        # Extract metadata features
+        res_skills = extract_skills(text)
+        num_skills = len(res_skills)
+
+        exp_str = extract_experience(text)
+        match = re.search(r'(\d+(?:\.\d+)?)', exp_str)
+        years_exp = float(match.group(1)) if match else 0.0
+
+        word_count = len(text.split())
+        has_metrics = 1.0 if any(c.isdigit() for c in text) else 0.0
+
+        # Predict mistakes
+        features_for_classifier = vectorizer.transform([text])
+        if hasattr(classifier, "predict_proba"):
+            scores_class = classifier.predict_proba(features_for_classifier)[0]
+        else:
+            raw_scores = classifier.decision_function(features_for_classifier)
+            scores_class = raw_scores[0] if hasattr(raw_scores, "__len__") else raw_scores
+            
+        num_mistakes = 0
+        for index, label in enumerate(mlb.classes_):
+            score = scores_class[index] if index < len(scores_class) else 0.0
+            if float(score) >= 0.35:
+                num_mistakes += 1
+
+        struct_features = np.array([[
+            float(num_skills),
+            float(years_exp),
+            float(word_count),
+            float(has_metrics),
+            float(num_mistakes)
+        ]])
+
+        tfidf_dense = features_for_classifier.toarray()
+        x_combined = np.hstack([tfidf_dense, struct_features])
+
+        pred = regressor.predict(x_combined)[0]
+        return int(round(max(0.0, min(100.0, float(pred)))))
+    except Exception:
+        return None
+
+
 def _model_issue_messages(resume_text):
     bundle = _load_bundle()
     if not bundle:
@@ -262,6 +327,52 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
     classifier = OneVsRestClassifier(LogisticRegression(max_iter=2000))
     classifier.fit(x, y)
 
+    # Train ATS Score Regressor with hybrid feature engineering
+    from backend.utils.ats_calculator import compute_ats_score_with_breakdown
+    from backend.utils.skill_extractor import extract_skills
+    from backend.utils.experience import extract_experience
+    from sklearn.linear_model import Ridge
+    import numpy as np
+
+    scores = []
+    struct_list = []
+    for text, labels in zip(texts, label_sets):
+        res_skills = extract_skills(text)
+        mistakes_details = [{"code": l} for l in labels]
+        score_data = compute_ats_score_with_breakdown(
+            resume_text=text,
+            job_description="",
+            resume_skills=res_skills,
+            job_skills=[],
+            mistakes_details=mistakes_details
+        )
+        scores.append(score_data["ats_score"])
+
+        # Extract metadata features
+        num_skills = len(res_skills)
+        exp_str = extract_experience(text)
+        import re
+        match = re.search(r'(\d+(?:\.\d+)?)', exp_str)
+        years_exp = float(match.group(1)) if match else 0.0
+        word_count = len(text.split())
+        has_metrics = 1.0 if any(c.isdigit() for c in text) else 0.0
+        num_mistakes = len(labels)
+
+        struct_list.append([
+            float(num_skills),
+            float(years_exp),
+            float(word_count),
+            float(has_metrics),
+            float(num_mistakes)
+        ])
+
+    tfidf_dense = x.toarray()
+    struct_x = np.array(struct_list)
+    x_combined = np.hstack([tfidf_dense, struct_x])
+
+    regressor = Ridge(alpha=1.0)
+    regressor.fit(x_combined, scores)
+
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
     with open(model_path, "wb") as handle:
         pickle.dump(
@@ -269,6 +380,7 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
                 "vectorizer": vectorizer,
                 "classifier": classifier,
                 "mlb": mlb,
+                "regressor": regressor,
                 "label_messages": LABEL_MESSAGES,
             },
             handle,

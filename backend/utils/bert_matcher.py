@@ -1,41 +1,18 @@
-try:
-    from sentence_transformers import SentenceTransformer
-    from sklearn.metrics.pairwise import cosine_similarity
-except Exception:
-    SentenceTransformer = None
-    def cosine_similarity(a, b):
-        return [[0.0]]
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-
-# Lazy model load
-_model = None
-
-def _load_model():
-    global _model
-    if _model is None:
-        if SentenceTransformer is None:
-            return None
-        try:
-            _model = SentenceTransformer("all-MiniLM-L6-v2")
-        except Exception:
-            _model = None
-    return _model
-
-
-def calculate_similarity(
-    resume_text,
-    job_description
-):
-    if not job_description:
-        return 0.0
-
-    model = _load_model()
-    if model is None:
+def calculate_similarity(resume_text, job_description):
+    """Calculate lightweight TF-IDF cosine similarity between resume and job description.
+    
+    This replaces SentenceTransformer to run in milliseconds and avoid CPU/RAM overheads.
+    """
+    if not job_description or not resume_text:
         return 0.0
 
     try:
-        embeddings = model.encode([resume_text, job_description])
-        similarity = cosine_similarity([embeddings[0]], [embeddings[1]])[0][0]
+        vectorizer = TfidfVectorizer(stop_words='english', ngram_range=(1, 2))
+        tfidf = vectorizer.fit_transform([resume_text, job_description])
+        similarity = cosine_similarity(tfidf[0:1], tfidf[1:2])[0][0]
         val = round(float(similarity) * 100, 2)
         return float(val)
     except Exception:

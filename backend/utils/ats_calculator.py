@@ -28,18 +28,8 @@ def compute_ats_score_with_breakdown(resume_text, job_description, resume_skills
         matched = resume_set & job_set
         skills_score = int(round((len(matched) / len(job_set)) * 100))
     else:
-        # Default skills coverage of catalog
-        from backend.app import SKILLS_FILE, BASE_DIR
-        import json
-        import os
-        try:
-            skills_path = os.path.join(BASE_DIR, 'data', 'skills.json')
-            with open(skills_path, 'r', encoding='utf-8') as sf:
-                skills_data = json.load(sf)
-            total = max(1, len(skills_data.get('skills', [])))
-            skills_score = int(min(100, round((len(resume_skills) / total) * 100)))
-        except Exception:
-            skills_score = 50
+        # Default skills coverage: benchmark against a realistic standard of 8 key skills
+        skills_score = int(min(100, round((len(resume_skills) / 8) * 100)))
 
     # 2. Experience Score
     from backend.utils.experience import extract_experience

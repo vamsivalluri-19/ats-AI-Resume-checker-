@@ -170,6 +170,7 @@ async function analyzeResume() {
                         <div class="meta-item"><i class="fa-solid fa-briefcase"></i> Experience: <strong>${escapeHtml(data.experience ?? 'Not detected')}</strong></div>
                         <div class="meta-item"><i class="fa-solid fa-cube"></i> Engine: <strong>${escapeHtml(data.mistake_source ?? 'heuristic')}</strong></div>
                         <div class="meta-item"><i class="fa-solid fa-bug"></i> Issues Found: <strong>${mistakes.length}</strong></div>
+                        <div class="meta-item"><i class="fa-solid fa-brain"></i> ML Predicted Score: <strong>${data.predicted_score !== undefined && data.predicted_score !== null ? data.predicted_score + '%' : 'N/A'}</strong></div>
                     </div>
                     ${issueSummary}
                 </div>
@@ -399,7 +400,11 @@ function downloadResumePDF() {
     let isHeaderParsed = false;
 
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
+        let line = lines[i].trim();
+        // Clean markdown bold/italic/headings symbols from the line
+        line = line.replace(/\*\*|__|\*|_/g, "");
+        line = line.replace(/^#+\s+/, ""); // strip markdown headers like "### "
+
         if (!line) {
             y += 6; // spacing for empty line
             continue;
@@ -499,7 +504,7 @@ function scheduleLiveAnalysis() {
         if (document.getElementById('resume')?.files?.length) {
             analyzeResume();
         }
-    }, 450);
+    }, 2000);
 }
 
 function resetForm() {
@@ -558,6 +563,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Job Description change listener
     if (jobDesc) {
         jobDesc.addEventListener('input', scheduleLiveAnalysis);
+        jobDesc.addEventListener('change', () => {
+            clearTimeout(liveAnalyzeTimer);
+            if (document.getElementById('resume')?.files?.length) {
+                analyzeResume();
+            }
+        });
     }
 
     // Drag and Drop listeners

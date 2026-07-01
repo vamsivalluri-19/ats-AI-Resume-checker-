@@ -3,6 +3,47 @@ import json
 import urllib.request
 import urllib.error
 
+def _post_gemini_request(data, api_key):
+    """Post request to the Gemini API, trying preferred and fallback models with fast timeouts and retries on 429."""
+    # List of models in order of preference
+    models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash"]
+    last_err = None
+
+    for model in models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(data).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        try:
+            # Set a 15-second timeout per model for fast failover/fallback
+            with urllib.request.urlopen(req, timeout=15) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as he:
+            if he.code == 429:
+                print(f"Gemini API 429 rate limit hit for model {model}. Retrying in 1.5s...")
+                import time
+                time.sleep(1.5)
+                try:
+                    with urllib.request.urlopen(req, timeout=15) as response:
+                        return json.loads(response.read().decode("utf-8"))
+                except Exception as retry_err:
+                    print(f"Gemini API retry failed for model {model}: {retry_err}")
+                    last_err = retry_err
+            else:
+                print(f"Gemini API HTTP Error {he.code} for model {model}: {he}")
+                last_err = he
+        except Exception as e:
+            print(f"Gemini API request failed for model {model}: {e}")
+            last_err = e
+            continue
+
+    if last_err:
+        raise last_err
+    raise Exception("No Gemini models succeeded")
+
 def analyze_with_gemini(resume_text, job_description=""):
     """Use the Gemini API to analyze the resume and return a structured review.
 
@@ -28,8 +69,7 @@ def analyze_with_gemini(resume_text, job_description=""):
     if not api_key:
         return None
 
-    # Use gemini-3.5-flash which is the active and supported model version
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+
 
     prompt = f"""
     You are an expert ATS (Applicant Tracking System) and professional resume reviewer.
@@ -69,23 +109,15 @@ def analyze_with_gemini(resume_text, job_description=""):
             "parts": [{"text": prompt}]
         }],
         "generationConfig": {
-            "responseMimeType": "application/json"
+            "responseMimeType": "application/json",
+            "temperature": 0.0
         }
     }
 
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(data).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST"
-    )
-
     try:
-        # 45 seconds timeout
-        with urllib.request.urlopen(req, timeout=45) as response:
-            res_data = json.loads(response.read().decode("utf-8"))
-            content_text = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            return json.loads(content_text)
+        res_data = _post_gemini_request(data, api_key)
+        content_text = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        return json.loads(content_text)
     except Exception as e:
         print(f"Gemini API analysis failed: {e}")
         return None
@@ -145,7 +177,7 @@ def chat_with_gemini(message, history, resume_text, job_description=""):
             "updated_resume_text": None
         }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+
 
     # Build the conversational contents structure
     contents = []
@@ -169,6 +201,10 @@ def chat_with_gemini(message, history, resume_text, job_description=""):
     - Help the user edit, refine, and optimize their resume.
     - If the user asks for specific rewrites, updates, or improvements, you MUST provide the complete, updated resume text in the JSON field.
     - Set 'updated_resume_text' to null if the user's request is a general question, explanation, or does not explicitly ask to rewrite, format, or change the resume. Only generate the complete resume text when the user explicitly requests edits, rewrites, or corrections.
+    - The 'updated_resume_text' MUST be in clean, plain text. Do NOT use markdown symbols (e.g. do NOT use `**` for bold, `#` or `###` for headers, `*` or `_` for italics).
+    - If you add or modify section headings (like EXPERIENCE, EDUCATION, SKILLS, PROJECTS), write them in ALL CAPS on their own line to keep them structured and clean.
+    - For bullet points, use a standard dash (`-`) or a bullet character (`•`).
+    - Make sure to strictly preserve all existing contact information (email, phone, name, links) and general sections from the original resume, unless the user explicitly requests you to modify or delete them. Do NOT invent fake contact information if it is not requested.
     - Your response must be in valid JSON format. Do not wrap it in markdown block tags.
     
     Expected JSON schema:
@@ -210,25 +246,39 @@ def chat_with_gemini(message, history, resume_text, job_description=""):
     data = {
         "contents": contents,
         "generationConfig": {
-            "responseMimeType": "application/json"
+            "responseMimeType": "application/json",
+            "temperature": 0.0
         }
     }
 
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(data).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST"
-    )
-
     try:
-        with urllib.request.urlopen(req, timeout=60) as response:
-            res_data = json.loads(response.read().decode("utf-8"))
-            content_text = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            return json.loads(content_text)
+        res_data = _post_gemini_request(data, api_key)
+        content_text = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        return json.loads(content_text)
     except Exception as e:
         print(f"Gemini Chat API failed: {e}")
+        # Offline rule-based fallback if API is rate-limited or fails
+        msg = message.lower()
+        fixed = resume_text or ""
+        replacements = {
+            "teh": "the",
+            "recieve": "receive",
+            "adn": "and",
+            "lenght": "length",
+            "managment": "management"
+        }
+        fixed_count = 0
+        for typo, correct in replacements.items():
+            if typo in fixed:
+                fixed = fixed.replace(typo, correct)
+                fixed_count += 1
+
+        if fixed_count > 0:
+            return {
+                "response": f"AI Assistant is currently rate-limited or offline ({e}). I've automatically corrected {fixed_count} spelling typos in the editor for you!",
+                "updated_resume_text": fixed
+            }
         return {
-            "response": f"Sorry, I failed to process your chat request: {e}. Please try again.",
+            "response": f"AI Assistant is currently rate-limited or offline ({e}). Please try again in a few seconds or edit your resume directly in the editor.",
             "updated_resume_text": None
         }

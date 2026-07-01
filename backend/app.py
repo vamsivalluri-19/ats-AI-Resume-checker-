@@ -49,8 +49,12 @@ def serve_frontend_file(filename):
     return jsonify({'error': 'Not found'}), 404
 
 
+from werkzeug.exceptions import HTTPException
+
 @app.errorhandler(Exception)
 def handle_unexpected_error(exc):
+    if isinstance(exc, HTTPException):
+        return exc
     app.logger.exception("Unexpected backend error")
     return jsonify({"error": f"Unexpected backend error: {exc}"}), 500
 
@@ -74,6 +78,10 @@ def analyze_resume():
         # Extract Resume Text
         resume_text = extract_text(file_path)
 
+        # Predict score using ML model
+        from backend.utils.resume_mistakes import predict_resume_score
+        predicted_score = predict_resume_score(resume_text)
+
         # 1. Try Gemini API analysis first
         from backend.utils.gemini_analyzer import analyze_with_gemini
         gemini_result = analyze_with_gemini(resume_text, job_description)
@@ -81,6 +89,7 @@ def analyze_resume():
         if gemini_result:
             return jsonify({
                 "ats_score": gemini_result.get("ats_score", 0),
+                "predicted_score": predicted_score,
                 "score_breakdown": gemini_result.get("score_breakdown", {
                     "skills": 0, "experience": 0, "formatting": 0, "impact": 0
                 }),
@@ -110,6 +119,7 @@ def analyze_resume():
 
         return jsonify({
             "ats_score": score_data["ats_score"],
+            "predicted_score": predicted_score,
             "score_breakdown": score_data["score_breakdown"],
             "skills": skills,
             "experience": experience,
