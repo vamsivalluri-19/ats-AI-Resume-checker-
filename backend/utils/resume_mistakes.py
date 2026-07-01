@@ -34,7 +34,13 @@ def _normalize_text(value):
 
 def _load_bundle():
     if not os.path.exists(MODEL_PATH):
-        return None
+        try:
+            print("Model file not found. Auto-training from dataset...")
+            dataset_path = os.path.join(BASE_DIR, "data", "resume_mistakes_dataset.csv")
+            train_from_dataset(dataset_path)
+        except Exception as e:
+            print(f"Failed to auto-train model: {e}")
+            return None
 
     try:
         with open(MODEL_PATH, "rb") as handle:

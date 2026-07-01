@@ -54,9 +54,13 @@ from werkzeug.exceptions import HTTPException
 @app.errorhandler(Exception)
 def handle_unexpected_error(exc):
     if isinstance(exc, HTTPException):
-        return exc
+        response = exc.get_response()
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
     app.logger.exception("Unexpected backend error")
-    return jsonify({"error": f"Unexpected backend error: {exc}"}), 500
+    response = jsonify({"error": f"Unexpected backend error: {exc}"})
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response, 500
 
 @app.route("/analyze", methods=["POST"])
 def analyze_resume():
@@ -133,7 +137,9 @@ def analyze_resume():
 
     except Exception as exc:
         app.logger.exception("Resume analysis failed")
-        return jsonify({"error": f"Resume analysis failed: {exc}"}), 500
+        response = jsonify({"error": f"Resume analysis failed: {exc}"})
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response, 500
 
 
 @app.route("/train-mistake-model", methods=["POST"])
