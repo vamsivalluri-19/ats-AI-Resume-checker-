@@ -55,6 +55,7 @@ def predict_resume_score(resume_text):
         return None
 
     vectorizer = bundle.get("vectorizer")
+    vectorizer_classifier = bundle.get("vectorizer_classifier", vectorizer)
     regressor = bundle.get("regressor")
     classifier = bundle.get("classifier")
     mlb = bundle.get("mlb")
@@ -83,8 +84,8 @@ def predict_resume_score(resume_text):
         word_count = len(text.split())
         has_metrics = 1.0 if any(c.isdigit() for c in text) else 0.0
 
-        # Predict mistakes
-        features_for_classifier = vectorizer.transform([text])
+        # Predict mistakes using classifier vectorizer
+        features_for_classifier = vectorizer_classifier.transform([text])
         if hasattr(classifier, "predict_proba"):
             scores_class = classifier.predict_proba(features_for_classifier)[0]
         else:
@@ -105,7 +106,9 @@ def predict_resume_score(resume_text):
             float(num_mistakes)
         ]])
 
-        tfidf_dense = features_for_classifier.toarray()
+        # Predict score using regressor vectorizer
+        features_for_regressor = vectorizer.transform([text])
+        tfidf_dense = features_for_regressor.toarray()
         x_combined = np.hstack([tfidf_dense, struct_features])
 
         pred = regressor.predict(x_combined)[0]
@@ -327,11 +330,14 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
     mlb = MultiLabelBinarizer()
     y = mlb.fit_transform(label_sets)
 
-    vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_features=5000)
-    x = vectorizer.fit_transform(texts)
+    vectorizer_classifier = TfidfVectorizer(ngram_range=(1, 2), max_features=1000)
+    x_class = vectorizer_classifier.fit_transform(texts)
 
     classifier = OneVsRestClassifier(LogisticRegression(max_iter=2000))
-    classifier.fit(x, y)
+    classifier.fit(x_class, y)
+
+    vectorizer_regressor = TfidfVectorizer(ngram_range=(1, 2), max_features=100)
+    x_reg = vectorizer_regressor.fit_transform(texts)
 
     # Train ATS Score Regressor with hybrid feature engineering
     from backend.utils.ats_calculator import compute_ats_score_with_breakdown
@@ -372,7 +378,7 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
             float(num_mistakes)
         ])
 
-    tfidf_dense = x.toarray()
+    tfidf_dense = x_reg.toarray()
     struct_x = np.array(struct_list)
     x_combined = np.hstack([tfidf_dense, struct_x])
 
@@ -384,7 +390,8 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
     with open(model_path, "wb") as handle:
         pickle.dump(
             {
-                "vectorizer": vectorizer,
+                "vectorizer": vectorizer_regressor,
+                "vectorizer_classifier": vectorizer_classifier,
                 "classifier": classifier,
                 "mlb": mlb,
                 "regressor": regressor,
