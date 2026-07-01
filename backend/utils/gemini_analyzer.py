@@ -18,16 +18,20 @@ def _post_gemini_request(data, api_key):
             method="POST"
         )
         try:
-            # Set a 15-second timeout per model for fast failover/fallback
-            with urllib.request.urlopen(req, timeout=15) as response:
+            # Set a 6-second timeout per model for fast failover/fallback (keeps total time under Gunicorn worker limits)
+            with urllib.request.urlopen(req, timeout=6) as response:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as he:
-            if he.code == 429:
+            if he.code in [400, 401, 403]:
+                # Invalid API Key or Permission denied: fail fast immediately instead of waiting for fallbacks
+                print(f"Gemini API authorization error {he.code} for model {model}: {he}")
+                raise he
+            elif he.code == 429:
                 print(f"Gemini API 429 rate limit hit for model {model}. Retrying in 1.5s...")
                 import time
                 time.sleep(1.5)
                 try:
-                    with urllib.request.urlopen(req, timeout=15) as response:
+                    with urllib.request.urlopen(req, timeout=6) as response:
                         return json.loads(response.read().decode("utf-8"))
                 except Exception as retry_err:
                     print(f"Gemini API retry failed for model {model}: {retry_err}")

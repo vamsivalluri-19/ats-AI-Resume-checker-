@@ -183,6 +183,17 @@ def chat_resume():
         return jsonify({"error": f"Chat failed: {exc}"}), 500
 
 
+# Automatically train the ML model on startup if it doesn't exist yet (e.g. on Render)
+from backend.utils.resume_mistakes import MODEL_PATH, train_from_dataset
+if not os.path.exists(MODEL_PATH):
+    try:
+        print("Pre-training ML model on container startup...")
+        dataset_path = os.path.join(BASE_DIR, "data", "resume_mistakes_dataset.csv")
+        train_from_dataset(dataset_path)
+    except Exception as e:
+        print(f"Failed to pre-train model on startup: {e}")
+
+
 if __name__ == "__main__":
     # Bind to 127.0.0.1 explicitly and enable debug for diagnostic output
     print("Starting AI Resume Screener backend on http://127.0.0.1:5000")
