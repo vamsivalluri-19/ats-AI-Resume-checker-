@@ -92,10 +92,21 @@ def predict_resume_score(resume_text):
             raw_scores = classifier.decision_function(features_for_classifier)
             scores_class = raw_scores[0] if hasattr(raw_scores, "__len__") else raw_scores
             
+        # Run heuristic check to gate structural false positives
+        heuristic_msgs = _heuristic_issue_messages(text)
+        heuristic_codes = set()
+        for label, msg in LABEL_MESSAGES.items():
+            if msg in heuristic_msgs:
+                heuristic_codes.add(label)
+
         num_mistakes = 0
         for index, label in enumerate(mlb.classes_):
             score = scores_class[index] if index < len(scores_class) else 0.0
             if float(score) >= 0.35:
+                # Rule-Gated Override: Eliminate ML false positives on structural issues
+                structural_codes = {"too_short", "no_bullets", "weak_impact", "missing_contact", "missing_skills", "missing_experience"}
+                if label in structural_codes and label not in heuristic_codes:
+                    continue
                 num_mistakes += 1
 
         struct_features = np.array([[
