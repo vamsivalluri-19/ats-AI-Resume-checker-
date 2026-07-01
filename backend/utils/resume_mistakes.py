@@ -376,7 +376,8 @@ def train_from_dataset(dataset_path, model_path=MODEL_PATH):
     struct_x = np.array(struct_list)
     x_combined = np.hstack([tfidf_dense, struct_x])
 
-    regressor = Ridge(alpha=1.0)
+    from sklearn.ensemble import RandomForestRegressor
+    regressor = RandomForestRegressor(n_estimators=100, random_state=42)
     regressor.fit(x_combined, scores)
 
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
